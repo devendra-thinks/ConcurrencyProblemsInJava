@@ -1,4 +1,4 @@
-package synchronizationpattern;
+package synchronizationpattern.signal;
 
 import java.util.logging.Logger;
 

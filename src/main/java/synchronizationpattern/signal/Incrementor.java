@@ -1,9 +1,9 @@
-package synchronizationpattern;
+package synchronizationpattern.signal;
 
 import java.util.logging.Logger;
 
 public class Incrementor implements Runnable{
-    Signal   signal;
+    Signal signal;
     Logger   logger;
 
     public Incrementor(  Signal signal){

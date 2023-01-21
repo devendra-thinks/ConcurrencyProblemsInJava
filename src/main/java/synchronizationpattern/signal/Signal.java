@@ -1,4 +1,4 @@
-package synchronizationpattern;
+package synchronizationpattern.signal;
 
 import java.util.concurrent.Semaphore;
 import java.util.logging.Logger;
