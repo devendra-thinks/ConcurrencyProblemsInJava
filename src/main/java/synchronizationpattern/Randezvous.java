@@ -1,4 +1,4 @@
-package synchronizationpattern.rendezvous;
+package synchronizationpattern;
 
 import java.util.concurrent.Semaphore;
 
