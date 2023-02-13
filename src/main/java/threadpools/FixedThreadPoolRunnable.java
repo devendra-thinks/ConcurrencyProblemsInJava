@@ -1,13 +1,14 @@
 package threadpools;
 
-import java.util.concurrent.BlockingQueue;
+import classicproblems.Queue;
+
 
 public class FixedThreadPoolRunnable implements Runnable{
 
     private boolean isStop = false;
-    private BlockingQueue<Runnable > queue;
+    private Queue<? > queue;
     private Thread thread;
-    public FixedThreadPoolRunnable(BlockingQueue<Runnable > queue){
+    public FixedThreadPoolRunnable(Queue<? > queue){
         this.queue = queue;
     }
 
@@ -15,17 +16,15 @@ public class FixedThreadPoolRunnable implements Runnable{
     public void run(){
         this.thread = Thread.currentThread();
         while(!isStop){
-            System.out.println("worker " + Thread.currentThread().getName() + " started executing... ");
             Runnable runnable = null;
             try {
-                runnable = queue.take();
+                runnable = (Runnable) queue.get();
             } catch (InterruptedException e) {
 
             }
             if(runnable != null )
                   runnable.run();
         }
-        System.out.println("worker " + Thread.currentThread().getName() + " stopped... ");
     }
 
     public void stop(){

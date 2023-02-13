@@ -8,7 +8,7 @@ import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-public class BlockingQueue<T >{
+public class BlockingQueue<T > implements Queue<T>{
     int size, front , rear, count;
     Object  [] items;
     Lock lock;
@@ -23,6 +23,7 @@ public class BlockingQueue<T >{
         isEmpty = lock.newCondition();
     }
 
+    @Override
     public void put(T e) throws InterruptedException {
         lock.lock();
         try{
@@ -38,6 +39,7 @@ public class BlockingQueue<T >{
     }
 
 
+    @Override
     public T get() throws InterruptedException {
         lock.lock();
         try{
@@ -62,4 +64,6 @@ public class BlockingQueue<T >{
             lock.unlock();
         }
     }
+
+
 }

@@ -1,9 +1,9 @@
 package threadpools;
 
+import classicproblems.BlockingQueue;
+
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.LinkedBlockingQueue;
 
 public class FixedSizeThreadPool {
     BlockingQueue<Runnable > queue;
@@ -13,7 +13,7 @@ public class FixedSizeThreadPool {
 
     public FixedSizeThreadPool(int n){
         this.n = n;
-        queue = new LinkedBlockingQueue<>();
+        queue = new classicproblems.BlockingQueue(100);
         workers = new ArrayList<>();
 
         for(int i = 0 ; i < n ; ++i){
@@ -22,15 +22,14 @@ public class FixedSizeThreadPool {
         }
     }
 
-    synchronized public void submit(Runnable runnable) throws IllegalAccessException {
+    synchronized public void submit(Runnable runnable) throws IllegalAccessException, InterruptedException {
         if(isStop){
             throw  new IllegalAccessException("Executor service stopping...");
         }
-        queue.add(runnable);
+        queue.put(runnable);
     }
 
-    synchronized public void stop() throws InterruptedException {
-        awaitTermination();
+    synchronized public void stop(){
         isStop = true;
         for(int i = 0 ; i < n ; i++ ){
             workers.get(i).stop();
@@ -38,8 +37,8 @@ public class FixedSizeThreadPool {
     }
 
     synchronized public void awaitTermination() throws InterruptedException {
-        while (!queue.isEmpty()){
-            Thread.sleep(1000);
+        while (queue.isEmpty()){
+            Thread.sleep(10);
         }
     }
 }
